@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Shell
+    x:Class="PetVideoApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:PetVideoApp.Pages"
+    Title="PetVideoApp">
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage" />
+
+    <TabBar Route="MainPage">
+        <ShellContent
+            Icon="eye.svg"
+            ContentTemplate="{DataTemplate pages:ArtFeedPage}"
+            Route="VideoFeed" />
+        <ShellContent
+            Icon="video.svg"
+            ContentTemplate="{DataTemplate pages:DrawingPage}"
+            Route="Create" />
+        <ShellContent
+            Icon="gear.svg"
+            ContentTemplate="{DataTemplate pages:SettingsPage}"
+            Route="Settings" />
+    </TabBar>
+
+
+</Shell>

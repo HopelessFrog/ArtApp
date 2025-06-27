@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PetVideoApp.Popups.PopupViewModels"
+    x:Class="PetVideoApp.Popups.ColorPopup"
+    x:DataType="vm:ColorPopupViewModel"
+    x:TypeArguments="Color"
+    xmlns:controls="clr-namespace:PetVideoApp.Controls">
+
+    <Border
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Padding="20"
+        BackgroundColor="White"
+        StrokeShape="RoundRectangle 40"
+        WidthRequest="300"
+        HeightRequest="800">
+
+        <Grid
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="20">
+
+            <Border
+                BackgroundColor="{Binding Color}"
+                HeightRequest="60"
+                StrokeShape="RoundRectangle 20"
+                Stroke="Black" />
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Spacing="15"
+                HorizontalOptions="Fill"
+                VerticalOptions="CenterAndExpand">
+
+                <VerticalStackLayout>
+                    <controls:StepSlider
+                        Step="1"
+                        Minimum="0"
+                        Maximum="255"
+                        Value="{Binding Red, Mode=TwoWay}"
+                        ThumbColor="Red"
+                        MaximumTrackColor="Red"
+                        MinimumTrackColor="Red" />
+                    <Label
+                        Text="{Binding Red}"
+                        TextColor="Red"
+                        HorizontalOptions="Center"
+                        FontAttributes="Bold">
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Offset="1,1"
+                                Radius="2"
+                                Opacity="0.8" />
+                        </Label.Shadow>
+                    </Label>
+                </VerticalStackLayout>
+
+
+                <VerticalStackLayout>
+                    <controls:StepSlider
+                        Step="1"
+                        HorizontalOptions="Fill"
+                        Minimum="0"
+                        Maximum="255"
+                        Value="{Binding Green, Mode=TwoWay}"
+                        ThumbColor="Green"
+                        MaximumTrackColor="Green"
+                        MinimumTrackColor="Green" />
+                    <Label
+                        Text="{Binding Green}"
+                        TextColor="Green"
+                        HorizontalOptions="Center"
+                        FontAttributes="Bold">
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Offset="1,1"
+                                Radius="2"
+                                Opacity="0.8" />
+                        </Label.Shadow>
+                    </Label>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <controls:StepSlider
+                        Step="1"
+                        Minimum="0"
+                        Maximum="255"
+                        Value="{Binding Blue, Mode=TwoWay}"
+                        ThumbColor="Blue"
+                        MaximumTrackColor="Blue"
+                        MinimumTrackColor="Blue" />
+                    <Label
+                        Text="{Binding Blue}"
+                        TextColor="Blue"
+                        HorizontalOptions="Center"
+                        FontAttributes="Bold">
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Offset="1,1"
+                                Radius="2"
+                                Opacity="0.8" />
+                        </Label.Shadow>
+                    </Label>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <controls:StepSlider
+                        Step="0.01"
+                        Value="{Binding Alpha, Mode=TwoWay}"
+                        ThumbColor="Gray"
+                        MaximumTrackColor="Gray"
+                        MinimumTrackColor="Gray" />
+                    <Label
+                        Text="{Binding Alpha}"
+                        TextColor="Gray"
+                        HorizontalOptions="Center"
+                        FontAttributes="Bold">
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Offset="1,1"
+                                Radius="2"
+                                Opacity="0.8" />
+                        </Label.Shadow>
+                    </Label>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <Button
+                Grid.Row="2"
+                Text="Apply"
+                Command="{Binding ApplyColorCommand}"
+                BackgroundColor="#60000000"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                WidthRequest="100" />
+
+        </Grid>
+
+    </Border>
+</toolkit:Popup>

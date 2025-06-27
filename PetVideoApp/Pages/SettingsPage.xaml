@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PetVideoApp.Pages.SettingsPage"
+    xmlns:vm="clr-namespace:PetVideoApp.ViewModels"
+    xmlns:controls="clr-namespace:PetVideoApp.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="vm:SettingsViewModel">
+ 
+    <ContentPage.Content>
+        <Grid
+            Padding="15"
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="20">
+            <VerticalStackLayout
+                Grid.Row="0">
+                <toolkit:AvatarView Text="{Binding Initial}" />
+                <Label
+                    Text="{Binding Name}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    FontSize="25"
+                    FontAttributes="Bold" />
+            </VerticalStackLayout>
+
+
+            <Border
+                Grid.Row="1"
+                StrokeShape="RoundRectangle 15"
+                BackgroundColor="{StaticResource Secondary}"
+                VerticalOptions="Start"
+                Padding="15"
+                StrokeThickness="0">
+                <VerticalStackLayout
+                    Spacing="15"
+                    VerticalOptions="Start">
+                    <controls:SettingsMenuItem
+                        IconSource="user.svg"
+                        Text="Rename" />
+                    <controls:SettingsMenuItem
+                        IconSource="user.svg"
+                        Text="Change password" >
+                        <controls:SettingsMenuItem.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangePasswordCommand}"/>
+                        </controls:SettingsMenuItem.GestureRecognizers>
+
+                    </controls:SettingsMenuItem>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+
+            <Button
+                Grid.Row="2"
+                Text="Logout"
+                Style="{StaticResource LogoutButtonStyle}"
+                Command="{Binding LogoutCommand}" />
+            
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

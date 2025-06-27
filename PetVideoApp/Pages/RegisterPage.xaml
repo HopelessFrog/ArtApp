@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:PetVideoApp.ViewModels"
+    x:DataType="vm:RegisterViewModel"
+    xmlns:controls="clr-namespace:PetVideoApp.Controls"
+    x:Class="PetVideoApp.Pages.RegisterPage">
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="*,Auto,Auto,*"
+            RowSpacing="15">
+            <VerticalStackLayout
+                Grid.Row="0"
+                Margin="0,10,0,0">
+                <Label
+                    Text="REGISTER"
+                    Margin="0,10,0,0"
+                    TextColor="{StaticResource Primary}"
+                    Style="{StaticResource appName}" />
+            </VerticalStackLayout>
+            <Border
+                Margin="20,0,20,20"
+                Grid.Row="1"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="4"
+                BackgroundColor="{StaticResource Secondary}">
+                <Image
+                    Source="reg_sym.png" />
+            </Border>
+            <VerticalStackLayout
+                Grid.Row="2"
+                Spacing="20"
+                Padding="15">
+                <controls:BorderedEntry
+                    Placeholder="Username"
+                    Text="{Binding Username}"
+                    ValidatedObject="{Binding .}"
+                    PropertyName="Username"/>
+                <controls:BorderedEntry
+                    Placeholder="Email"
+                    Text="{Binding Email}"
+                    ValidatedObject="{Binding .}"
+                    PropertyName="Email" />
+                <controls:BorderedEntry
+                    Placeholder="Password"
+                    Text="{Binding Password}"
+                    ValidatedObject="{Binding .}"
+                    PropertyName="Password"
+                    IsPassword="True" />
+                <Button
+                    FontAttributes="Bold"
+                    Text="Register"
+                    Command="{Binding RegisterCommand}"/>
+                <ActivityIndicator
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    HorizontalOptions="Center" />
+                <Label
+                    Style="{StaticResource ClickableLabelStyle}"
+                    Text="Back to Login">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding NavigateToLoginPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

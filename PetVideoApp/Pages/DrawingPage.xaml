@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:PetVideoApp.ViewModels"
+    x:DataType="vm:DrawingViewModel"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:converters="clr-namespace:PetVideoApp.Converters"
+    xmlns:controls="clr-namespace:PetVideoApp.Controls"
+    x:Name="Page"
+    x:Class="PetVideoApp.Pages.DrawingPage">
+    <ContentPage.Resources>
+        <converters:ColorToBorderConverter
+            x:Key="ColorToBorderConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border
+                IsVisible="{Binding IsColorListVisible}"
+                Grid.Row="0"
+                BackgroundColor="#80FFFFFF"
+                StrokeShape="RoundRectangle 20"
+                Padding="4">
+                <Grid>
+                    <ScrollView
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout
+                            Spacing="8"
+                            BindableLayout.ItemsSource="{Binding AvailableColors}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate
+                                    x:DataType="Colors">
+                                    <Border
+                                        BackgroundColor="{Binding .}"
+                                        Stroke="{Binding Source={RelativeSource AncestorType={x:Type vm:DrawingViewModel}}, Path=SelectedColor,
+                                        Converter={StaticResource ColorToBorderConverter}, ConverterParameter={Binding . }}"
+                                        StrokeThickness="3"
+                                        WidthRequest="40"
+                                        HeightRequest="40">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle
+                                                CornerRadius="20" />
+                                        </Border.StrokeShape>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DrawingViewModel}}, Path=SelectColorCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
+
+                </Grid>
+            </Border>
+            <Border
+                MinimumHeightRequest="55"
+                IsVisible="{Binding IsStrokeSliderVisible}"
+                Grid.Row="1"
+                BackgroundColor="#80FFFFFF"
+                StrokeShape="RoundRectangle 20"
+                Padding="4">
+                <Grid
+                    ColumnDefinitions="5*,*">
+                    <controls:StepSlider
+                        Step="1"
+                        Value="{Binding LineWidth}"
+                        Minimum="1"
+                        Maximum="40">
+                    </controls:StepSlider>
+                    <Border
+                        Grid.Column="1"
+                        Stroke="White"
+                        BackgroundColor="{Binding SelectedColor}"
+                        WidthRequest="{Binding LineWidth}"
+                        HeightRequest="{Binding LineWidth}">
+                        <Border.StrokeShape>
+                            <RoundRectangle
+                                CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Offset="1,1"
+                                Radius="2"
+                                Opacity="0.8" />
+                        </Border.Shadow>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border
+                Grid.Row="2"
+                BackgroundColor="White"
+                Padding="0"
+                StrokeShape="RoundRectangle 40"
+                Margin="5">
+                <ScrollView>
+                    <toolkit:DrawingView
+                        
+                        ZIndex="1"
+                        x:Name="DrawingCanvas"
+                        BackgroundColor="White"
+                        IsMultiLineModeEnabled="True"
+                        Lines="{Binding DrawedLines}"
+                        ShouldClearOnFinish="False"
+                        LineColor="{Binding SelectedColor}"
+                        LineWidth="{Binding LineWidth}"
+                        DrawingLineCompletedCommand="{Binding DrawingLineCommand}" />
+                </ScrollView>
+
+
+            </Border>
+
+            <Border
+                BackgroundColor="#20FFFFFF"
+                StrokeShape="RoundRectangle 20"
+                Grid.Row="3"
+                Padding="6">
+
+                <Grid
+                    ColumnDefinitions="2*,*">
+                    <Border
+                        BackgroundColor="#30FFFFFF"
+                        Padding="2"
+                        StrokeShape="RoundRectangle 20">
+
+                        <HorizontalStackLayout
+                            Spacing="10"
+                            HorizontalOptions="Center">
+                            <Border
+                                Background="{Binding SelectedColor}"
+                                Stroke="White"
+                                StrokeThickness="3"
+                                WidthRequest="40"
+                                HeightRequest="40">
+                                <Border.StrokeShape>
+                                    <RoundRectangle
+                                        CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Offset="1,1"
+                                        Radius="2"
+                                        Opacity="0.8" />
+                                </Border.Shadow>
+                              
+                                <Border.Behaviors>
+                                    <toolkit:TouchBehavior
+                                        BindingContext="{Binding Source={x:Reference Page}, Path=BindingContext}"
+                                        Command="{Binding ToggleColorListCommand}"
+                                        LongPressCommand="{Binding ChangeColorCommand}"
+                                        LongPressDuration="400" />
+                                </Border.Behaviors>
+                            </Border>
+                            <ImageButton
+                                BorderColor="White"
+                                Padding="4"
+                                CornerRadius="40"
+                                BackgroundColor="#80FFFFFF"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Command="{Binding ToggleStrokeSliderCommand}"
+                                Source="stroke.svg">
+                                <ImageButton.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Offset="1,1"
+                                        Radius="2"
+                                        Opacity="0.8" />
+                                </ImageButton.Shadow>
+                            </ImageButton>
+
+                            <ImageButton
+                                Command="{Binding ClearCommand}"
+                                BorderColor="White"
+                                Padding="4"
+                                CornerRadius="40"
+                                BackgroundColor="#80FFFFFF"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Source="clear.svg">
+                                <ImageButton.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Offset="1,1"
+                                        Radius="2"
+                                        Opacity="0.8" />
+                                </ImageButton.Shadow>
+                            </ImageButton>
+
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <HorizontalStackLayout
+                        HorizontalOptions="End"
+                        Grid.Column="1"
+                        Spacing="10"
+                        Margin="0">
+                        <ImageButton
+                            BorderColor="White"
+                            CornerRadius="40"
+                            Source="undo.svg"
+                            BackgroundColor="#80FFFFFF"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Command="{Binding UndoCommand}"
+                            IsEnabled="{Binding CanUndo}">
+                            <ImageButton.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Offset="1,1"
+                                    Radius="2"
+                                    Opacity="0.8" />
+                            </ImageButton.Shadow>
+                        </ImageButton>
+
+                        <ImageButton
+                            BorderColor="White"
+                            CornerRadius="40"
+                            Source="redo.svg"
+                            BackgroundColor="#80FFFFFF"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Command="{Binding RedoCommand}"
+                            IsEnabled="{Binding CanRedo}">
+                            <ImageButton.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Offset="1,1"
+                                    Radius="2"
+                                    Opacity="0.8" />
+                            </ImageButton.Shadow>
+                        </ImageButton>
+                    </HorizontalStackLayout>
+                </Grid>
+
+            </Border>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

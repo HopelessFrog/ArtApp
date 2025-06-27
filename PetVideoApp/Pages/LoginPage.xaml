@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PetVideoApp.Controls"
+    x:Class="PetVideoApp.Pages.LoginPage"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:PetVideoApp.ViewModels"
+    x:DataType="vm:LoginViewModel"
+    Shell.NavBarIsVisible="False">
+    
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="Auto,Auto,Auto,*"
+            RowSpacing="15">
+            <Label
+                Grid.Row="0"
+                Text="CrocHedgeLert"
+                Margin="0,30,0,0"
+                Style="{StaticResource appName}" />
+            <Border
+                Margin="20,0,20,20"
+                Grid.Row="1"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="4">
+                <Image
+                    Source="app_symbol.png" />
+            </Border>
+            <VerticalStackLayout
+                Grid.Row="2"
+                Spacing="20"
+                Padding="15">
+                <controls:BorderedEntry
+                    Text="{Binding EmailOrUsername}"
+                    ValidatedObject="{Binding .}"
+                    PropertyName="EmailOrUsername"
+                    Placeholder="Enter email or username" />
+                <controls:BorderedEntry
+                    Placeholder="Password"
+                    Text="{Binding Password}"
+                    ValidatedObject="{Binding .}"
+                    PropertyName="Password"
+                    IsPassword="True" />
+                <Button
+                    FontAttributes="Bold"
+                    Text="Login"
+                    Command="{Binding LoginCommand}"/>
+                <ActivityIndicator
+                    IsVisible="{Binding IsBusy}"
+                    IsRunning="{Binding IsBusy}"
+                    HorizontalOptions="Center" />
+                <Label
+                    Style="{StaticResource ClickableLabelStyle}"
+                    Text="Register">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding NavigateToRegisterPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
